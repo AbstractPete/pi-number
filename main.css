@@ -1,0 +1,56 @@
+.square{
+    /*width: 50%;
+    height: 0;
+    padding-bottom: 50%;*/
+}
+.square-item{
+    display:inline-block;
+    border: cadetblue;
+    border-radius: 1px;
+    border: thin;
+    vertical-align: middle;
+    text-align: center;
+    margin: 4px;
+    width: 20px;
+    height: 20px;
+    background-color: gray;
+}
+
+.digit_0 {
+    background-color: #001f3f;
+    color: white;
+}
+
+.digit_1 {
+    background-color: #0074D9;
+}
+
+.digit_2 {
+    background-color: #7FDBFF;
+}
+.digit_3 {
+    background-color: #39CCCC;
+}
+.digit_4 {
+    background-color: #3D9970;
+}
+.digit_5 {
+    background-color: #2ECC40
+;
+}
+.digit_6 {
+    background-color: #01FF70;
+}
+.digit_7 {
+    background-color: #FFDC00;
+}
+.digit_8 {
+    background-color: #FF851B;
+}
+.digit_9 {
+    background-color: #FF4136;
+}
+
+.digit_disabled{
+    background-color: #DDDDDD;
+}

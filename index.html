@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>&pi;</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body ng-controller="main.ctrl">
+<div class="container-fluid">
+<div class="page-header">
+    <h1><i class="fa fa-2x  fa-circle-o" style="color:#001f3f"></i> <i style="color: #001f3f">&pi; number</i></h1>
+</div>
+<!--
+<form name="" id="" method="post" action="" enctype="text/plain" onsubmit="calcPI(this.t1.value);return false;">
+
+    Number of Digits:<br>
+
+    <input type="text" name="t1" id="t1" value="100" size="25" maxlength="25"><br>
+
+    Add Count:
+
+    <input type="checkbox" name="cbCount" id="cbCount" value="" checked="checked"><br>
+
+    Add Spaces:
+
+    <input type="checkbox" name="cbSpace" id="cbSpace" value="" checked="checked"><br>
+
+    <input type="button" value="Calculate Pi" onclick="calcPI(this.form.t1.value)">
+
+</form>-->
+
+<input type="text" ng-model="size" name="size" placeholder="length of pi" ng-change="reDraw(size)"/>
+
+<label class="checkbox-inline" ng-repeat="opt in opts"><input type="checkbox" ng-model="opt.val" ng-click="ap(opt.val)" value="">
+    <div class="{{opt.style_class}}"   style="margin: inherit">{{opt.digit}}</div>
+</label>
+
+<div class="square" >
+    <div class="square-item" ng-class="getClass(value)" ng-repeat="value in digit_cells track by $index">{{value}}</div>
+</div>
+    <!--container fluid ends here-->
+</div>
+<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="math.pi.js" type="text/javascript"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="bower_components/angular/angular.js" type="text/javascript"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.js" type="text/javascript"></script>
+<script>
+    angular.module('app',['ui.bootstrap'])
+            .controller('main.ctrl',['$scope',function($scope){
+                console.log('controller');
+                $scope.size = 10;
+                $scope.ap = function (val) {
+                    console.log(val);
+                    console.log($scope.opts);
+                };
+                $scope.opts = [
+                    {
+                         digit:0
+                        ,style_class:'square-item digit_0'
+                        ,val:true
+                    },
+                    {
+                        digit:1
+                        ,style_class:'square-item digit_1'
+                        ,val:true
+                    },
+                    {
+                        digit:2
+                        ,style_class:'square-item digit_2'
+                        ,val:true
+                    },
+                    {
+                        digit:3
+                        ,style_class:'square-item digit_3'
+                        ,val:true
+                    },
+                    {
+                        digit:4
+                        ,style_class:'square-item digit_4'
+                        ,val:true
+                    },
+                    {
+                        digit:5
+                        ,style_class:'square-item digit_5'
+                        ,val:true
+                    },
+                    {
+                        digit:6
+                        ,style_class:'square-item digit_6'
+                        ,val:true
+                    },
+                    {
+                        digit:7
+                        ,style_class:'square-item digit_7'
+                        ,val:true
+                    },
+                    {
+                        digit:8
+                        ,style_class:'square-item digit_8'
+                        ,val:true
+                    },
+                    {
+                        digit:9
+                        ,style_class:'square-item digit_9'
+                        ,val:true
+                    }
+                ];
+                $scope.digit_cells = [];
+               /* var sm = new SimpleMath();
+                sm.CalculatePi(20);*/
+                $scope.getClass = function (val) {
+                    switch (val){
+                        case 0: return ($scope.opts[0].val === true)? 'digit_0':'digit_disabled';
+                        case 1: return ($scope.opts[1].val === true)? 'digit_1':'digit_disabled';
+                        case 2: return ($scope.opts[2].val === true)? 'digit_2':'digit_disabled';
+                        case 3: return ($scope.opts[3].val === true)? 'digit_3':'digit_disabled';
+                        case 4: return ($scope.opts[4].val === true)? 'digit_4':'digit_disabled';
+                        case 5: return ($scope.opts[5].val === true)? 'digit_5':'digit_disabled';
+                        case 6: return ($scope.opts[6].val === true)? 'digit_6':'digit_disabled';
+                        case 7: return ($scope.opts[7].val === true)? 'digit_7':'digit_disabled';
+                        case 8: return ($scope.opts[8].val === true)? 'digit_8':'digit_disabled';
+                        case 9: return ($scope.opts[9].val === true)? 'digit_9':'digit_disabled';
+                    }
+
+                  //  {'digit_0': value === 0,'digit_1': value === 1,'digit_2': value === 2,'digit_3': value === 3,'digit_4': value === 4,'digit_5': value === 5,'digit_6': value === 6,'digit_7': value === 7,'digit_8': value === 8,'digit_9': value === 9}
+                };
+
+
+                $scope.info = function () {
+                    console.log($scope.opts);
+                }
+
+                var isDisabled = function (f) {
+                    return $scope.opts[f].val;
+                };
+                $scope.isDisabledClass = isDisabled;
+
+                var reDraw = function (digit) {
+                    $scope.digit_cells = [];
+                    var temp = [];
+                  /*  var rand = function getRandomInt(min, max) {
+                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                    };
+                    for(var i = 0; i < digit ;i++){
+                        temp.push(rand(0,9));
+                    }*/
+
+                    var pi = calcPI(digit);
+                    temp.push(pi[0]);
+                    for(var i = 1 ; i < pi.length;i++){
+                        var tensq = pi[i].toString();
+                        for(var j = 0; j < tensq.length;j++){
+                           temp.push(parseInt(tensq.charAt(j)));
+                        }
+                    }
+
+                    console.log('redraw called');
+                    $scope.digit_cells = temp;
+                    console.log($scope.digit_cells);
+                };
+                $scope.reDraw = reDraw;
+                reDraw($scope.size);
+            }]);
+
+
+
+
+</script>
+</body>
+</html>
